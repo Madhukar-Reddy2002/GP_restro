@@ -113,17 +113,6 @@ const App = () => {
     setNotification(null);
   };
 
-  const notificationStyles = useSpring({
-    from: { opacity: 0, transform: 'translateX(100%)' },
-    to: { opacity: 1, transform: 'translateX(0%)' },
-    config: { duration: 300 },
-    onRest: () => {
-      setTimeout(() => {
-        setNotification(null);
-      }, 3000);
-    },
-  });
-
   const modalStyles = useSpring({
     from: { opacity: 0, transform: 'scale(0.8)' },
     to: { opacity: 1, transform: 'scale(1)' },
@@ -131,7 +120,7 @@ const App = () => {
   });
 
   return (
-    <div className="bg-gradient-to-br from-black/90 to-black/70">
+    <div className="bg-gradient-to-br from-black/90 to-black/70 min-h-screen">
       {/* Header */}
       <header className="bg-gradient-to-br from-red-700/90 to-red-600/70 text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
@@ -139,9 +128,12 @@ const App = () => {
         </div>
       </header>
 
-      <div className="container">
+      <div className="container py-8">
         <h1 className="text-3xl font-bold text-center mb-8 text-brandWhite">Menu</h1>
-        <div className="fixed bottom-4 right-4 z-50 bg-white shadow-lg rounded-full p-3 cursor-pointer" onClick={() => setIsModalOpen(true)}>
+        <div
+          className="fixed bottom-4 right-4 z-50 bg-white shadow-lg rounded-full p-3 cursor-pointer"
+          onClick={() => setIsModalOpen(true)}
+        >
           <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />
           {cartItems.length > 0 && (
             <div className="absolute top-0 right-0 bg-red-500 text-white font-bold rounded-full w-5 h-5 flex items-center justify-center text-xs">
@@ -150,13 +142,27 @@ const App = () => {
           )}
         </div>
         {notification && (
-          <animated.div style={notificationStyles} className="bg-white fixed top-4 right-4 shadow-lg rounded-full px-4 py-2 flex items-center text-sm z-50">
-            {notification.type === 'add'
-              ? `Added ${notification.item} (${notification.quantity})`
-              : `Removed ${notification.item}`}
-          </animated.div>
+          <div className="fixed top-4 right-4 z-50">
+            <animated.div
+              style={modalStyles}
+              className={`shadow-lg rounded-full px-4 py-2 flex items-center text-sm ${
+                notification.type === 'add'
+                  ? 'bg-green-500 text-white'
+                  : notification.type === 'increment'
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-red-500 text-white'
+              }`}
+            >
+              {notification.type === 'add'
+                ? `Added ${notification.item} (${notification.quantity})`
+                : notification.type === 'increment'
+                ? `Increased ${notification.item} to ${notification.quantity}`
+                : `Removed ${notification.item}`}
+            </animated.div>
+          </div>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 grid-flow-row">
+          {/* Menu items rendering */}
           {menuItems.map((category, index) => (
             <div key={index} className="mb-8 flex flex-col gap-3">
               <h2 className="text-2xl font-semibold mb-4 text-brandWhite">{category.category}</h2>
@@ -196,6 +202,7 @@ const App = () => {
           ))}
         </div>
 
+        {/* Modal */}
         <Modal
           isOpen={isModalOpen}
           onRequestClose={handleCloseModal}
@@ -207,17 +214,14 @@ const App = () => {
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-2xl font-bold">Cart</h2>
               <button
-                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                className="text-blue-500 hover:text-blue-700 cursor-pointer"
                 onClick={clearCart}
               >
                 <FontAwesomeIcon icon={faTrash} className="text-xl" />
               </button>
-              <a href="upi://pay?pa=paytmqr1xchtothpc@paytm&pn=Paytm" target="_blank" rel="noopener noreferrer" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                Pay
-              </a>
               <FontAwesomeIcon
                 icon={faTimes}
-                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                className="text-red-500 hover:text-red-700 text-xl cursor-pointer"
                 onClick={handleCloseModal}
               />
             </div>
@@ -226,10 +230,15 @@ const App = () => {
             ) : (
               <div>
                 {cartItems.map((item) => (
-                  <div key={item.id} className="flex justify-between gap items-center mb-4">
+                  <div
+                    key={item.id}
+                    className="flex justify-between gap items-center mb-4"
+                  >
                     <div>
                       <h3 className="font-medium">{item.name}</h3>
-                      <p className="text-gray-500">{item.quantity} x {item.price}₹</p>
+                      <p className="text-gray-500">
+                        {item.quantity} x {item.price}₹
+                      </p>
                     </div>
                     <div className="flex items-center">
                       <button
@@ -248,8 +257,17 @@ const App = () => {
                     </div>
                   </div>
                 ))}
-                <div className="border-t pt-4 mt-4">
-                  <p className="font-medium">Total: {getTotalAmount()}₹</p>
+                <div className="border-t pt-4 mt-4 flex items-center justify-between">
+                  <p className="font-medium">Total: ₹{getTotalAmount()}
+                  </p>
+                  <a
+                href="upi://pay?pa=paytmqr1xchtothpc@paytm&pn=Paytm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Pay
+              </a>
                 </div>
               </div>
             )}

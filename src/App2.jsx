@@ -187,52 +187,67 @@ const App = () => {
           className="bg-white shadow-lg rounded-lg p-6 max-w-md mx-auto sm:w-full"
           overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center"
         >
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">Cart</h2>
-            <button
-              className="text-gray-500 hover:text-gray-700 cursor-pointer"
-              onClick={clearCart}
-            >
-              Clear Cart
-            </button>
-            <FontAwesomeIcon
-              icon={faTimes}
-              className="text-gray-500 hover:text-gray-700 cursor-pointer"
-              onClick={handleCloseModal}
-            />
-          </div>
-          {cartItems.length === 0 ? (
-            <p>Your cart is empty.</p>
-          ) : (
-            <div>
-              {cartItems.map((item) => (
-                <div key={item.id} className="flex justify-between gap items-center mb-4">
-                  <div>
-                    <h3 className="font-medium">{item.name}</h3>
-                    <p className="text-gray-500">{item.quantity} x {item.price}₹</p>
-                  </div>
-                  <div className="flex items-center">
-                    <button
-                      className="px-2 py-1 bg-gray-200 rounded-full mr-2"
-                      onClick={() => removeFromCart(item.id)}
-                    >
-                      <FontAwesomeIcon icon={faMinus} />
-                    </button>
-                    <span>{item.quantity * item.price}₹</span>
-                    <button
-                      className="px-2 py-1 bg-gray-200 rounded-full ml-2"
-                      onClick={() => addToCart(item)}
-                    >
-                      <FontAwesomeIcon icon={faPlus} />
-                    </button>
-                  </div>
-                </div>
-              ))}
-              <div className="border-t pt-4 mt-4">
-                <p className="font-medium">Total: {getTotalAmount()}₹</p>
-              </div>
+          <animated.div style={modalStyles}>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-bold">Cart</h2>
+              <button
+                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                onClick={clearCart}
+              >
+                <FontAwesomeIcon icon={faTrash} className="text-xl" />
+              </button>
+              <a
+                href="upi://pay?pa=paytmqr1xchtothpc@paytm&pn=Paytm"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+              >
+                Pay
+              </a>
+              <FontAwesomeIcon
+                icon={faTimes}
+                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                onClick={handleCloseModal}
+              />
             </div>
-          )}
+            {cartItems.length === 0 ? (
+              <p>Your cart is empty.</p>
+            ) : (
+              <div>
+                {cartItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex justify-between gap items-center mb-4"
+                  >
+                    <div>
+                      <h3 className="font-medium">{item.name}</h3>
+                      <p className="text-gray-500">
+                        {item.quantity} x {item.price}₹
+                      </p>
+                    </div>
+                    <div className="flex items-center">
+                      <button
+                        className="px-2 py-1 bg-gray-200 rounded-full mr-2"
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        <FontAwesomeIcon icon={faMinus} />
+                      </button>
+                      <span>{item.quantity * item.price}₹</span>
+                      <button
+                        className="px-2 py-1 bg-gray-200 rounded-full ml-2"
+                        onClick={() => addToCart(item)}
+                      >
+                        <FontAwesomeIcon icon={faPlus} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                <div className="border-t pt-4 mt-4">
+                  <p className="font-medium">Total: {getTotalAmount()}₹</p>
+                </div>
+              </div>
+            )}
+          </animated.div>
         </Modal>
       </div>
 
