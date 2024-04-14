@@ -34,34 +34,47 @@ const App = () => {
       category: 'Curries (Non-Veg)',
       items: [
         { id: 10, name: 'Chicken Butter Masala (Half)', price: 230 },
+        { id: 26, name: 'Chicken Butter Masala (Full)', price: 430 },
+
         { id: 11, name: 'Kadai Chicken (Half)', price: 230 },
+        { id: 27, name: 'Kadai Chicken (Full)', price: 430 },
+
         { id: 12, name: 'Andhra Chicken Curry (Half)', price: 230 },
+        { id: 28, name: 'Andhra Chicken Curry (Full)', price: 430 },
+
         { id: 13, name: 'Chicken Fry (Half)', price: 230 },
+        { id: 29, name: 'Chicken Fry (Full)', price: 430 },
+
         { id: 14, name: 'Kolapur Chicken (Half)', price: 230 },
+        { id: 30, name: 'Kolapur Chicken (Full)', price: 430 },
+
         { id: 15, name: 'Punjabi Chicken Curry (Half)', price: 230 },
+        { id: 31, name: 'Punjabi Chicken Curry (Full)', price: 430 },
+
         { id: 16, name: 'Mutton Masala (Half)', price: 310 },
+        { id: 32, name: 'Mutton Masala (Full)', price: 580 },
+
         { id: 17, name: 'Kadai Mutton (Half)', price: 260 },
+        { id: 33, name: 'Kadai Mutton (Full)', price: 480 },
+
         { id: 18, name: 'Fish Curry (Half)', price: 270 },
+        { id: 34, name: 'Fish Curry (Full)', price: 490 },
+
         { id: 19, name: 'Fish Fry (Half)', price: 260 },
+        { id: 35, name: 'Fish Fry (Full)', price: 480 },
+
         { id: 20, name: 'Fish Roast (Half)', price: 270 },
+        { id: 36, name: 'Fish Roast (Full)', price: 490 },
+
         { id: 21, name: 'Andhra Fish Pulusu (Half)', price: 270 },
+        { id: 37, name: 'Andhra Fish Pulusu (Full)', price: 490 },
+
         { id: 22, name: 'Apollo Fish (Half)', price: 280 },
+        { id: 38, name: 'Apollo Fish (Full)', price: 510 },
+
         { id: 23, name: 'Egg Curry', price: 100 },
         { id: 24, name: 'Masala Omelette', price: 50 },
         { id: 25, name: 'Egg Bhujiya', price: 60 },
-        { id: 26, name: 'Chicken Butter Masala (Full)', price: 430 },
-        { id: 27, name: 'Kadai Chicken (Full)', price: 430 },
-        { id: 28, name: 'Andhra Chicken Curry (Full)', price: 430 },
-        { id: 29, name: 'Chicken Fry (Full)', price: 430 },
-        { id: 30, name: 'Kolapur Chicken (Full)', price: 430 },
-        { id: 31, name: 'Punjabi Chicken Curry (Full)', price: 430 },
-        { id: 32, name: 'Mutton Masala (Full)', price: 580 },
-        { id: 33, name: 'Kadai Mutton (Full)', price: 480 },
-        { id: 34, name: 'Fish Curry (Full)', price: 490 },
-        { id: 35, name: 'Fish Fry (Full)', price: 480 },
-        { id: 36, name: 'Fish Roast (Full)', price: 490 },
-        { id: 37, name: 'Andhra Fish Pulusu (Full)', price: 490 },
-        { id: 38, name: 'Apollo Fish (Full)', price: 510 },
       ],
     },
     {
@@ -103,20 +116,22 @@ const App = () => {
       category: 'Veg Curries',
       items: [
         { id: 59, name: 'Mixed Veg Curry (Half)', price: 190 },
-        { id: 60, name: 'Methi Chaman (Half)', price: 250 },
-        { id: 61, name: 'Mushroom Masala (Half)', price: 190 },
-        { id: 62, name: 'Kadai Mushroom (Half)', price: 200 },
-        { id: 63, name: 'Paneer Butter Masala (Half)', price: 210 },
-        { id: 64, name: 'Kadai Paneer (Half)', price: 210 },
-        { id: 65, name: 'Paneer Kaju Curry (Half)', price: 300 },
-        { id: 66, name: 'Kaju Tomato (Half)', price: 300 },
         { id: 67, name: 'Mixed Veg Curry (Full)', price: 340 },
+        { id: 60, name: 'Methi Chaman (Half)', price: 250 },
         { id: 68, name: 'Methi Chaman (Full)', price: 450 },
+        { id: 61, name: 'Mushroom Masala (Half)', price: 190 },
         { id: 69, name: 'Mushroom Masala (Full)', price: 360 },
+        { id: 62, name: 'Kadai Mushroom (Half)', price: 200 },
         { id: 70, name: 'Kadai Mushroom (Full)', price: 360 },
+
+        { id: 63, name: 'Paneer Butter Masala (Half)', price: 210 },
         { id: 71, name: 'Paneer Butter Masala (Full)', price: 380 },
+
+        { id: 64, name: 'Kadai Paneer (Half)', price: 210 },
         { id: 72, name: 'Kadai Paneer (Full)', price: 390 },
+        { id: 65, name: 'Paneer Kaju Curry (Half)', price: 300 },
         { id: 73, name: 'Paneer Kaju Curry (Full)', price: 540 },
+        { id: 66, name: 'Kaju Tomato (Half)', price: 300 },
         { id: 74, name: 'Kaju Tomato (Full)', price: 540 },
       ],
     },
@@ -213,10 +228,18 @@ const App = () => {
     {
       category: "Mandi's (Dry/Juicy/Spl)",
       items: [
-        { id: 149, name: 'MINI MANDI (Dry/Juicy/Spl)', price: [240, 260, 280] },
-        { id: 150, name: 'MEDIUM MANDI (Dry/Juicy/Spl)', price: [420, 460, 490] },
-        { id: 151, name: 'LARGE MANDI (Dry/Juicy/Spl)', price: [630, 680, 720] },
-        { id: 152, name: 'JUMBO MANDI (Dry/Juicy/Spl)', price: [830, 890, 950] },
+        { id: 149, name: 'MINI MANDI (Dry)', price: 240},
+        { id: 174, name: 'MINI MANDI (Juicy)', price: 260 },
+        { id: 175, name: 'MINI MANDI (Spl)', price: 280 },
+        { id: 150, name: 'MEDIUM MANDI (Dry)', price: 420},
+        { id: 176, name: 'MEDIUM MANDI (Juicy)', price: 460},
+        { id: 177, name: 'MEDIUM MANDI (Spl)', price: 490},
+        { id: 151, name: 'LARGE MANDI (Dry)', price: 630 },
+        { id: 178, name: 'LARGE MANDI (Juicy)', price: 680 },
+        { id: 179, name: 'LARGE MANDI (Spl)', price: 720 },
+        { id: 152, name: 'JUMBO MANDI (Dry)', price: 830},
+        { id: 180, name: 'JUMBO MANDI (Juicy)', price: 890},
+        { id: 181, name: 'JUMBO MANDI (Spl)', price: 950},
       ],
     },
     {
