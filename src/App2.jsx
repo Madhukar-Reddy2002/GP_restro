@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faTimes, faPlus, faMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
-import { useSpring, animated } from 'react-spring';
 
 const App = () => {
   useEffect(() => {
@@ -113,33 +112,16 @@ const App = () => {
     setNotification(null);
   };
 
-  const notificationStyles = useSpring({
-    from: { opacity: 0, transform: 'translateX(100%)' },
-    to: { opacity: 1, transform: 'translateX(0%)' },
-    config: { duration: 300 },
-    onRest: () => {
-      setTimeout(() => {
-        setNotification(null);
-      }, 3000);
-    },
-  });
-
-  const modalStyles = useSpring({
-    from: { opacity: 0, transform: 'scale(0.8)' },
-    to: { opacity: 1, transform: 'scale(1)' },
-    config: { duration: 300 },
-  });
-
   return (
-    <div className="bg-gradient-to-br from-black/90 to-black/70">
+    <div className='bg-gradient-to-br from-black/90 to-black/70'>
       {/* Header */}
-      <header className="bg-gradient-to-br from-red-700/90 to-red-600/70 text-white p-4">
+      <header className="bg-gradient-to-br from-red-700/90 to-red-600/70  text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-xl font-bold">GP-Restro</h1>
         </div>
       </header>
 
-      <div className="container">
+      <div>
         <h1 className="text-3xl font-bold text-center mb-8 text-brandWhite">Menu</h1>
         <div className="fixed bottom-4 right-4 z-50 bg-white shadow-lg rounded-full p-3 cursor-pointer" onClick={() => setIsModalOpen(true)}>
           <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />
@@ -150,11 +132,13 @@ const App = () => {
           )}
         </div>
         {notification && (
-          <animated.div style={notificationStyles} className="bg-white fixed top-4 right-4 shadow-lg rounded-full px-4 py-2 flex items-center text-sm z-50">
+          <div className=" bg-white fixed top-4 right-4 shadow-lg rounded-full px-4 py-2 flex items-center text-sm">
             {notification.type === 'add'
               ? `Added ${notification.item} (${notification.quantity})`
+              : notification.type === 'increment'
+              ? `Increased ${notification.item} to ${notification.quantity}`
               : `Removed ${notification.item}`}
-          </animated.div>
+          </div>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 grid-flow-row">
           {menuItems.map((category, index) => (
@@ -203,57 +187,52 @@ const App = () => {
           className="bg-white shadow-lg rounded-lg p-6 max-w-md mx-auto sm:w-full"
           overlayClassName="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center"
         >
-          <animated.div style={modalStyles}>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold">Cart</h2>
-              <button
-                className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                onClick={clearCart}
-              >
-                <FontAwesomeIcon icon={faTrash} className="text-xl" />
-              </button>
-              <a href="upi://pay?pa=paytmqr1xchtothpc@paytm&pn=Paytm" target="_blank" rel="noopener noreferrer" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                Pay
-              </a>
-              <FontAwesomeIcon
-                icon={faTimes}
-                className="text-gray-500 hover:text-gray-700 cursor-pointer"
-                onClick={handleCloseModal}
-              />
-            </div>
-            {cartItems.length === 0 ? (
-              <p>Your cart is empty.</p>
-            ) : (
-              <div>
-                {cartItems.map((item) => (
-                  <div key={item.id} className="flex justify-between gap items-center mb-4">
-                    <div>
-                      <h3 className="font-medium">{item.name}</h3>
-                      <p className="text-gray-500">{item.quantity} x {item.price}₹</p>
-                    </div>
-                    <div className="flex items-center">
-                      <button
-                        className="px-2 py-1 bg-gray-200 rounded-full mr-2"
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        <FontAwesomeIcon icon={faMinus} />
-                      </button>
-                      <span>{item.quantity * item.price}₹</span>
-                      <button
-                        className="px-2 py-1 bg-gray-200 rounded-full ml-2"
-                        onClick={() => addToCart(item)}
-                      >
-                        <FontAwesomeIcon icon={faPlus} />
-                      </button>
-                    </div>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Cart</h2>
+            <button
+              className="text-gray-500 hover:text-gray-700 cursor-pointer"
+              onClick={clearCart}
+            >
+              Clear Cart
+            </button>
+            <FontAwesomeIcon
+              icon={faTimes}
+              className="text-gray-500 hover:text-gray-700 cursor-pointer"
+              onClick={handleCloseModal}
+            />
+          </div>
+          {cartItems.length === 0 ? (
+            <p>Your cart is empty.</p>
+          ) : (
+            <div>
+              {cartItems.map((item) => (
+                <div key={item.id} className="flex justify-between gap items-center mb-4">
+                  <div>
+                    <h3 className="font-medium">{item.name}</h3>
+                    <p className="text-gray-500">{item.quantity} x {item.price}₹</p>
                   </div>
-                ))}
-                <div className="border-t pt-4 mt-4">
-                  <p className="font-medium">Total: {getTotalAmount()}₹</p>
+                  <div className="flex items-center">
+                    <button
+                      className="px-2 py-1 bg-gray-200 rounded-full mr-2"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      <FontAwesomeIcon icon={faMinus} />
+                    </button>
+                    <span>{item.quantity * item.price}₹</span>
+                    <button
+                      className="px-2 py-1 bg-gray-200 rounded-full ml-2"
+                      onClick={() => addToCart(item)}
+                    >
+                      <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                  </div>
                 </div>
+              ))}
+              <div className="border-t pt-4 mt-4">
+                <p className="font-medium">Total: {getTotalAmount()}₹</p>
               </div>
-            )}
-          </animated.div>
+            </div>
+          )}
         </Modal>
       </div>
 
@@ -262,7 +241,7 @@ const App = () => {
         <div className="container mx-auto">
           <p className="text-center">
             Best South Indian Restaurant near Lawgate, LPU, Jalandhar, Punjab. <br />
-            "Good food is all the sweeter when shared with good friends." <br />
+            "Good food is all the sweeter when shared with good friends."  <br />
             Follow us on Instagram: @gp_restro | Contact us on WhatsApp: +91 XXXXXXXXXX
           </p>
         </div>
